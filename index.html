@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matrix MatrixLab | Dark Red & Yellow Linear Algebra Studio</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- FontAwesome for clean icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="top-nav">
+      <div class="logo">
+        <span class="logo-bracket">[</span>
+        <span class="logo-text">MATRIX<span class="accent-yellow">LAB</span></span>
+        <span class="logo-bracket">]</span>
+      </div>
+      <div class="header-actions">
+        <button id="addMatrixBtn" class="btn btn-yellow">
+          <i class="fa-solid fa-plus"></i> Add a Matrix
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="workspace">
+      <!-- Left: Matrices Grid -->
+      <section class="matrices-area">
+        <div class="section-title">
+          <h2>Active Matrices</h2>
+          <span class="hint">Edit dimensions, fill cells, or inspect live mathematical properties</span>
+        </div>
+        <div id="matricesContainer" class="matrices-grid">
+          <!-- Dynamic Matrix Cards Injected by app.js -->
+        </div>
+      </section>
+
+      <!-- Right: Operations Panel & Results -->
+      <aside class="operations-sidebar">
+        <!-- Operations Card -->
+        <div class="sidebar-card">
+          <div class="card-header">
+            <h3><i class="fa-solid fa-calculator accent-red"></i> Operations</h3>
+          </div>
+          
+          <div class="card-body">
+            <!-- Operand Matrix Pickers -->
+            <div class="operand-selection">
+              <div class="select-group">
+                <label for="opMatrixA">Matrix A</label>
+                <select id="opMatrixA"></select>
+              </div>
+              <div class="select-group" id="groupMatrixB">
+                <label for="opMatrixB">Matrix B</label>
+                <select id="opMatrixB"></select>
+              </div>
+            </div>
+
+            <!-- Operations Button Grid -->
+            <div class="operations-grid">
+              <!-- Binary Ops (Needs 2 matrices) -->
+              <button class="op-btn" data-op="add" title="Matrix A + Matrix B">
+                <span class="op-icon">+</span>
+                <span class="op-name">Addition</span>
+              </button>
+              <button class="op-btn" data-op="subtract" title="Matrix A - Matrix B">
+                <span class="op-icon">&minus;</span>
+                <span class="op-name">Subtraction</span>
+              </button>
+              <button class="op-btn" data-op="multiply" title="Matrix A &times; Matrix B">
+                <span class="op-icon">&times;</span>
+                <span class="op-name">Multiplication</span>
+              </button>
+
+              <!-- Unary Ops (Acts on Matrix A) -->
+              <button class="op-btn" data-op="transpose" title="Transpose of A">
+                <span class="op-icon">A<sup>T</sup></span>
+                <span class="op-name">Transpose</span>
+              </button>
+              <button class="op-btn" data-op="determinant" title="Determinant |A|">
+                <span class="op-icon">|A|</span>
+                <span class="op-name">Determinant</span>
+              </button>
+              <button class="op-btn" data-op="inverse" title="Inverse A⁻¹">
+                <span class="op-icon">A<sup>&minus;1</sup></span>
+                <span class="op-name">Inverse</span>
+              </button>
+              <button class="op-btn" data-op="adjoint" title="Adjugate/Adjoint Matrix">
+                <span class="op-icon">adj(A)</span>
+                <span class="op-name">Adjoint</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Output / Computation Result Card -->
+        <div class="sidebar-card result-card">
+          <div class="card-header">
+            <h3><i class="fa-solid fa-square-root-variable accent-yellow"></i> Computation Result</h3>
+            <button id="clearResultBtn" class="btn-text">Clear</button>
+          </div>
+          <div class="card-body">
+            <div id="resultContent" class="empty-result">
+              <i class="fa-solid fa-circle-nodes"></i>
+              <p>Select matrices & click an operation to compute</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- Modal for Creating / Adding a Matrix -->
+  <div id="matrixModal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Create New Matrix</h3>
+        <button id="closeModalBtn" class="btn-icon">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <label>Matrix Name</label>
+          <input type="text" id="modalMatrixName" placeholder="e.g. C" maxlength="5" />
+        </div>
+        <div class="dimension-row">
+          <div class="form-row">
+            <label>Rows (M)</label>
+            <input type="number" id="modalRows" min="1" max="6" value="3" />
+          </div>
+          <span class="dim-separator">&times;</span>
+          <div class="form-row">
+            <label>Cols (N)</label>
+            <input type="number" id="modalCols" min="1" max="6" value="3" />
+          </div>
+        </div>
+        <div class="form-row">
+          <label>Pre-fill With</label>
+          <select id="modalPrefill">
+            <option value="zeros">Zeros (0)</option>
+            <option value="identity">Identity Matrix (I)</option>
+            <option value="random">Random Integers (1-9)</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelModalBtn" class="btn btn-secondary">Cancel</button>
+        <button id="confirmCreateBtn" class="btn btn-red">Create Matrix</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
